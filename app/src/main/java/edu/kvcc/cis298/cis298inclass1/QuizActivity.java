@@ -10,28 +10,40 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
+    // Creates class level widget variables.
     private Button mTrueButton;
     private Button mFalseButton;
 
+    // Default "setup" method for the app. Is called on launch.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        // Fetch the widget control from view and then cast to previously declared variable.
         mTrueButton = (Button) findViewById(R.id.true_button);
+
+        // Sets up an onClickListener for widget. Basically checks for button click and then
+        // performs action.
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Toasts a message to the screen.
                 Toast.makeText(QuizActivity.this,
                                 R.string.correct_toast,
                                 Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Fetch the widget control from view and then cast to previously declared variable.
         mFalseButton = (Button) findViewById(R.id.false_button);
+
+        // Sets up an onClickListener for widget. Basically checks for button click and then
+        // performs action.
         mFalseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Toasts a message to the screen.
                 Toast.makeText(QuizActivity.this,
                         R.string.incorrect_toast,
                         Toast.LENGTH_SHORT).show();

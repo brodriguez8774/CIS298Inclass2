@@ -4,10 +4,25 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="question_text">Cats are neat.</string>
+    <string name="title_main">Title, Question #</string>
+    <string name="title_sub">Subtitle</string>
+
+    <!-- Buttons -->
     <string name="true_button">True</string>
     <string name="false_button">False</string>
+    <string name="next_button">Next Question</string>
 
+    <!-- Toasts -->
     <string name="correct_toast">:3</string>
     <string name="incorrect_toast">Wow :c</string>
+
+    <!-- Questions -->
+    <string name="question_cats">Cats are neat.</string>
+    <string name="question_dogs">Dogs are cool too.</string>
+    <string name="question_pets">Infact, most pets are nice.</string>
+    <string name="question_homework">But not homework.</string>
+    <string name="question_homework2">Homework is mean.</string>
+    <string name="question_false">These statements have all been false.</string>
+
+
 </resources>

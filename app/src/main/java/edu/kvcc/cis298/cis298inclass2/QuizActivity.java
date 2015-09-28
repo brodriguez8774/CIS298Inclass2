@@ -1,7 +1,8 @@
-package edu.kvcc.cis298.cis298inclass1;
+package edu.kvcc.cis298.cis298inclass2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
+
 
     // Creates class level widget variables.
     private Button mTrueButton;
@@ -28,6 +30,8 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_homework2, true),
             new Question(R.string.question_false, false)
     };
+
+
 
     // Makes a pointer to display current question.
     private void updateQuestion() {
@@ -72,6 +76,7 @@ public class QuizActivity extends AppCompatActivity {
                 // Toasts a message to the screen.
                 checkAnswer(true);
 
+                // Changes index and also creates a loop, going back to 0 when last is reached.
                 mCurrentIndex = (mCurrentIndex +1) % mQuestionBank.length;
                 updateQuestion();
             }
@@ -101,6 +106,41 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+    }
+
+    // Java's version of constants. String to use for override methods.
+    private static final String TAG = "QuizActivity";
+
+    // Below are the main activity methods which can be overriden to 'do work.'
+    // Our app will call all of these in sequence as it loads and is closed.
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package edu.kvcc.cis298.cis298inclass1;
+package edu.kvcc.cis298.cis298inclass2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

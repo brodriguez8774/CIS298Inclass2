@@ -2,20 +2,26 @@
 
 ## Author
 
-You fill this out
+Brandon Rodriguez
 
 ## Description
 
-This will be the description of the assignment
+
 
 ### Notes
 
-This will be any notes I add for you
+
 
 ## Outside Resources Used
 
-You fill this out
+http://stackoverflow.com/questions/2344524/java-equivalent-to-region-in-c-sharp
+* Learned how to use C#'s "#region" equivalent in java.
+
+http://stackoverflow.com/questions/6608673/i-want-to-create-documentation-in-c-something-similar-to-javadoc
+http://www.oracle.com/technetwork/articles/java/index-137868.html
+* Learned about the Java equivalent of /// from C#.
+* Is called "JavaDoc."
 
 ## Known Problems, Issues, And/Or Errors in the Program
 
-You fill this out
+

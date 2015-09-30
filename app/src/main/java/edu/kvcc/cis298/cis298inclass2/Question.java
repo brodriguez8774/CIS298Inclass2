@@ -6,34 +6,63 @@ package edu.kvcc.cis298.cis298inclass2;
 public class Question {
 
     //region Variables
-    private int mTextResId;         // Int which holds ref value for string.xml string.
-    private boolean mAnswerTrue;    // Bool value for true/false.
+    private int mTextResId;             // Int which holds ref value for string.xml string.
+    private boolean mAnswerTrue;        // Bool value for true/false.
+    private int mCorrectAnswerResId;    // Holds id of correct resource.
+    private int[] mChoiceResIds;        // Int array to hold id's of choices.
 
     //endregion
 
     //region Constructor
+
+    // Constructor for True/False questions.
     public Question(int textResId, boolean answerTrue) {
-        mTextResId = textResId;
-        mAnswerTrue = answerTrue;
+        setTextResId(textResId);
+        setAnswerTrue(answerTrue);
+    }
+
+    // Constructor for RadioButton Questions.
+    public Question(int textResId, int correctAnswerId, int[] choiceResIds){
+        setTextResId(textResId);
+        setCorrectAnswerResId(correctAnswerId);
+        setChoiceResIds(choiceResIds);
     }
     //endregion
 
+
+
     //region Properties
 
-    public void setAnswerTrue(boolean answerTrue){
-        mAnswerTrue = answerTrue;
+    public int getTextResId() {
+        return mTextResId;
     }
 
-    public boolean getAnswerTrue(){
-        return mAnswerTrue;
-    }
-
-    public void setTextResId(int textResId){
+    public void setTextResId(int textResId) {
         mTextResId = textResId;
     }
 
-    public int getTextResId(){
-        return mTextResId;
+    public boolean getAnswerTrue() {
+        return mAnswerTrue;
+    }
+
+    public void setAnswerTrue(boolean answerTrue) {
+        mAnswerTrue = answerTrue;
+    }
+
+    public int getCorrectAnswerResId() {
+        return mCorrectAnswerResId;
+    }
+
+    public void setCorrectAnswerResId(int correctAnswerResId) {
+        mCorrectAnswerResId = correctAnswerResId;
+    }
+
+    public int[] getChoiceResIds() {
+        return mChoiceResIds;
+    }
+
+    public void setChoiceResIds(int[] choiceResIds) {
+        mChoiceResIds = choiceResIds;
     }
 
     //endregion

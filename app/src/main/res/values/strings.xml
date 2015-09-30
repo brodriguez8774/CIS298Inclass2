@@ -11,6 +11,7 @@
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="next_button">Next Question</string>
+    <string name="submit_button">Submit</string>
 
     <!-- Toasts -->
     <string name="correct_toast">:3</string>
@@ -24,5 +25,9 @@
     <string name="question_homework2">Homework is mean.</string>
     <string name="question_false">These statements have all been false.</string>
 
-
+    <!-- RadioChoices -->
+    <string name="choice_1">Yus</string>
+    <string name="choice_2">No</string>
+    <string name="choice_3">Maybe?</string>
+    <string name="choice_4">I refrain from answering something so silly.</string>
 </resources>

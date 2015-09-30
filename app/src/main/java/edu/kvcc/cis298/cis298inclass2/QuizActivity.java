@@ -64,6 +64,11 @@ public class QuizActivity extends AppCompatActivity {
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
 
+        // Checks to see if there is a bundle that is not null.
+        // If so, fetches KEY_INDEX which will be index for current question.
+        if (savedInstanceState != null){
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         updateQuestion();
 
         // Fetch the widget control from view and then cast to previously declared variable.
@@ -110,6 +115,17 @@ public class QuizActivity extends AppCompatActivity {
 
     // Java's version of constants. String to use for override methods.
     private static final String TAG = "QuizActivity";
+
+    // String to be used as the key in key/value bundle for onSaveInstanceState.
+    private static final String KEY_INDEX = "index";
+
+    //Override Method to store any necessary information about our activity when saving state.
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState");
+        outState.putInt(KEY_INDEX, mCurrentIndex);
+    }
 
     // Below are the main activity methods which can be overriden to 'do work.'
     // Our app will call all of these in sequence as it loads and is closed.

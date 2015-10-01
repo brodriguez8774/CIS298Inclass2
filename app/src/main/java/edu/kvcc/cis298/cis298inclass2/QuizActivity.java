@@ -36,13 +36,13 @@ public class QuizActivity extends AppCompatActivity {
 
     // Hardcoded array of questions to be used. Most apps want data to come from somewhere
     // else. IE: database, internet, etc.
-    private Question[] mQuestionBank = new Question[]{
+    private Question[] mMultipleChoiceQuestionBank = new Question[]{
             new Question(R.string.question_cats, R.id.choice_1_radio, mChoiceResId),
             new Question(R.string.question_dogs, R.id.choice_1_radio, mChoiceResId),
             new Question(R.string.question_pets, R.id.choice_1_radio, mChoiceResId),
             new Question(R.string.question_homework, R.id.choice_1_radio, mChoiceResId),
             new Question(R.string.question_homework2, R.id.choice_1_radio, mChoiceResId),
-            new Question(R.string.question_false, R.id.choice_1_radio, mChoiceResId)
+            new Question(R.string.question_false, R.id.choice_2_radio, mChoiceResId)
     };
     /* Used for non-radio questions.
     private Question[] mQuestionBank = new Question[]{
@@ -54,17 +54,28 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_false, false)
     };*/
 
+    // Java's version of constants. String to use for override methods.
+    private static final String TAG = "QuizActivity";
+
+    // String to be used as the key in key/value bundle for onSaveInstanceState.
+    private static final String KEY_INDEX = "index";
+
     //endregion
+
+
+
 
     //region Standard Methods
 
-    // Makes a pointer to display current question.
+    /**
+     * Updates display to match current question.
+     */
     private void updateQuestion() {
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
+        int question = mMultipleChoiceQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
 
         // Fetch the question choice strings.
-        int[] choices = mQuestionBank[mCurrentIndex].getChoiceResIds();
+        int[] choices = mMultipleChoiceQuestionBank[mCurrentIndex].getChoiceResIds();
 
         // Assigns each choice text to the text property of the corresponding radio button.
         mChoice1.setText(choices[0]);
@@ -73,12 +84,17 @@ public class QuizActivity extends AppCompatActivity {
         mChoice4.setText(choices[3]);
     }
 
+    /**
+     * Compares user's answer with desired answer and toasts accordingly.
+     *
+     * @param userPressedTrue Bool of user's given answer.
+     */
     private void checkTrueFalseAnswer(boolean userPressedTrue){
 
-        boolean answerIsTrue = mQuestionBank[mCurrentIndex].getAnswerTrue();
+        boolean answerIsTrue = mMultipleChoiceQuestionBank[mCurrentIndex].getAnswerTrue();
 
         // Int which points to desired string.
-        int messageResId = 0;
+        int messageResId;
 
         // Compares answer to one passed in method. Assigns toast message accordingly.
         if (userPressedTrue == answerIsTrue) {
@@ -90,12 +106,18 @@ public class QuizActivity extends AppCompatActivity {
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * Compares user's multiple choice selection with desired selection and toasts accordingly.
+     *
+     * @param selectedRadioButtonId Int pointing to user's selection.
+     */
     private void checkMultipleChoiceAnswer(int selectedRadioButtonId){
 
-        int correctAnswer = mQuestionBank[mCurrentIndex].getCorrectAnswerResId();
+        int correctAnswer = mMultipleChoiceQuestionBank[mCurrentIndex].getCorrectAnswerResId();
 
         // Int which points to desired string.
-        int messageResId = 0;
+        int messageResId;
 
         // Compares answer to one passed in method. Assigns toast message accordingly.
         if (selectedRadioButtonId == correctAnswer) {
@@ -109,12 +131,20 @@ public class QuizActivity extends AppCompatActivity {
 
     //endregion
 
+
+
     //region Override Methods
 
-    // Default "setup" method for the app. Is called on launch.
+    /**
+     * Default "setup" method for the app. Called on after launch but before screen display and
+     * initializes necessary ui components.
+     *
+     * @param savedInstanceState ...magic?
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called");
         setContentView(R.layout.activity_quiz);
 
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -165,13 +195,13 @@ public class QuizActivity extends AppCompatActivity {
                 mCurrentIndex = (mCurrentIndex +1) % mQuestionBank.length;
                 updateQuestion();
             }
-        });
-*/
+        });*/
+
         mNextButton = (Button) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex +1) % mQuestionBank.length;
+                mCurrentIndex = (mCurrentIndex +1) % mMultipleChoiceQuestionBank.length;
                 updateQuestion();
             }
         });
@@ -190,13 +220,14 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
-    // Java's version of constants. String to use for override methods.
-    private static final String TAG = "QuizActivity";
-
-    // String to be used as the key in key/value bundle for onSaveInstanceState.
-    private static final String KEY_INDEX = "index";
-
     //Override Method to store any necessary information about our activity when saving state.
+
+    /**
+     * Used to save the current instance of program even after destroying and re-creating the
+     * activity (such as after a screen rotation).
+     *
+     * @param outState ...magic?
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -204,36 +235,69 @@ public class QuizActivity extends AppCompatActivity {
         outState.putInt(KEY_INDEX, mCurrentIndex);
     }
 
-    // Below are the main activity methods which can be overriden to 'do work.'
+
+    // Below are the main activity methods which can be overwritten to 'do work.'
     // Our app will call all of these in sequence as it loads and is closed.
+
+    /**
+     * Actions to perform on startup of activity. Comes after create.
+     * <p>
+     * Currently only logs.
+     */
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop() called");
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
+    /**
+     * Actions to perform on resume, either after a pause or after startup.
+     * <p>
+     * Currently only logs.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume() called");
     }
 
+    /**
+     * Actions to perform on pause of application. Must pause before stop and destroy.
+     * Pause is generally a literal pause, but with the application still visible?
+     * <p>
+     * Currently only logs.
+     */
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart() called");
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    /**
+     * Actions to perform on stop of application. Must stop before destroy.
+     * Stop generally occurs anytime the application is removed from view? Unless destroy is called,
+     * application will still run in background.
+     * <p>
+     * Currently only logs.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    /**
+     * Actions to perform on destroy of application. Removes application from memory entirely.
+     * Occurs if user exits via back (not home), if user rotates application (in which case
+     * application is immediately recreated), or if application is stopped but phone terminates
+     * all stopped applications for memory allocation.
+     * <p>
+     * Currently only logs.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
     }
 
     @Override
@@ -259,4 +323,5 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     //endregion
+
 }

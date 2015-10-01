@@ -13,15 +13,28 @@ public class Question {
 
     //endregion
 
+
+
     //region Constructor
 
-    // Constructor for True/False questions.
+    /**
+     * Constructor for True/False Questions.
+     *
+     * @param textResId Pointer to current question in string.xml file.
+     * @param answerTrue Correct answer to current question.
+     */
     public Question(int textResId, boolean answerTrue) {
         setTextResId(textResId);
         setAnswerTrue(answerTrue);
     }
 
-    // Constructor for RadioButton Questions.
+    /**
+     * Constructor for Multiple Choice Questions.
+     *
+     * @param textResId Pointer to current question in string.xml file.
+     * @param correctAnswerId Correct answer to current question.
+     * @param choiceResIds Array holding list of possible answers to current question.
+     */
     public Question(int textResId, int correctAnswerId, int[] choiceResIds){
         setTextResId(textResId);
         setCorrectAnswerResId(correctAnswerId);

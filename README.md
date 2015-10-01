@@ -22,6 +22,11 @@ http://www.oracle.com/technetwork/articles/java/index-137868.html
 * Learned about the Java equivalent of /// from C#.
 * Is called "JavaDoc."
 
+http://stackoverflow.com/questions/9537392/git-fetch-remote-branch
+http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches#Tracking-Branches
+* The "proper" way to pull down a remote branch to local?
+* git checkout --track origin/nameOfBranchHere
+
 ## Known Problems, Issues, And/Or Errors in the Program
 
 

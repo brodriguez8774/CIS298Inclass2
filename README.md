@@ -22,6 +22,9 @@ http://www.oracle.com/technetwork/articles/java/index-137868.html
 * Learned about the Java equivalent of /// from C#.
 * Is called "JavaDoc."
 
+https://gist.github.com/lttlrck/9628955
+* Renaming branches.
+
 ## Known Problems, Issues, And/Or Errors in the Program
 
 

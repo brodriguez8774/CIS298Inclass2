@@ -1,5 +1,6 @@
 package edu.kvcc.cis298.cis298inclass2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
+    private boolean mIsCheater;
 
     // Hardcoded array of questions to be used. Most apps want data to come from somewhere
     // else. IE: database, internet, etc.
@@ -34,12 +36,19 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_false, false)
     };
 
-
+    // "Final" is Java's version of constants.
+    // String to use for override methods.
+    private static final String TAG = "QuizActivity";
+    // String to be used as the key in key/value bundle for onSaveInstanceState.
+    private static final String KEY_INDEX = "index";
+    // Int to be used as identifier for activity response.
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     // Makes a pointer to display current question.
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        mIsCheater = false;
     }
 
     private void checkAnswer(boolean userPressedTrue){
@@ -49,11 +58,15 @@ public class QuizActivity extends AppCompatActivity {
         // Int which points to desired string.
         int messageResId = 0;
 
-        // Compares answer to one passed in method. Assigns toast message accordingly.
-        if (userPressedTrue == answerIsTrue) {
-            messageResId = R.string.correct_toast;
+        if (mIsCheater) {
+            messageResId = R.string.judgement_toast;
         } else {
-            messageResId = R.string.incorrect_toast;
+            // Compares answer to one passed in method. Assigns toast message accordingly.
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
@@ -121,24 +134,38 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].getAnswerTrue();
                 Intent i = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_CODE_CHEAT);
             }
         });
 
     }
 
-    // Java's version of constants. String to use for override methods.
-    private static final String TAG = "QuizActivity";
-
-    // String to be used as the key in key/value bundle for onSaveInstanceState.
-    private static final String KEY_INDEX = "index";
-
     //Override Method to store any necessary information about our activity when saving state.
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i(TAG, "onSaveInstanceState");
+        Log.i(TAG, "onSaveInstanceState called");
         outState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult called");
+
+        // If activity doesn't return valid result
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        // If request code matches data we wanted.
+        if (requestCode == REQUEST_CODE_CHEAT)  {
+            // If data is null.
+            if (data == null) {
+                return;
+            }
+            mIsCheater = CheatActivity.wasAnswerShown(data);
+        }
     }
 
     // Below are the main activity methods which can be overriden to 'do work.'

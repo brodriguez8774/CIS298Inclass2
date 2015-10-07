@@ -25,6 +25,9 @@ http://www.oracle.com/technetwork/articles/java/index-137868.html
 https://gist.github.com/lttlrck/9628955
 * Renaming branches.
 
+http://stackoverflow.com/questions/12340482/android-getting-a-int-from-a-edit-text
+* Parsing user input field into a double.
+
 ## Known Problems, Issues, And/Or Errors in the Program
 
 
